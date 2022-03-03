@@ -48,7 +48,7 @@ import time
 
 
 
-######## Make an example 3 body system
+######## Make an example multibody system
 system = Simulation.Simulation()
 #set engines
 system.engines['Graphics'] = VPythonGraphicsEngine.VPythonGraphicsEngine()
@@ -58,9 +58,9 @@ system.engines['Gravity'] = PhysicsEngines.GravityEngineEulerIntegrationElementw
 
 #make some bodies - inital momentum sums to 0 to make it easier to watch
 system.bodies['apple'] = PhysicsBody.PhysicsBody("apple", (1.0,0.0,0.0),
-                                             (0.-.25,1.0,0.0), 1.0)
+                                             (-.25,1.0,0.0), 1.0)
 system.bodies['orange'] = PhysicsBody.PhysicsBody("orange", (-1.0,0.0,0.0),
-                                             (0.-.25,-1.0,0.0), 1.0)
+                                             (-.25,-1.0,0.0), 1.0)
 system.bodies['blue'] = PhysicsBody.PhysicsBody("blue", (0.0,0.0,0.5),
                                              (0.5,0.0,0.0), 1.0)
 #add components to those bodies
@@ -80,6 +80,18 @@ system.bodies['blue'].addComponent(Component.makeComponent(
     vpython.sphere(color=vpython.color.blue, radius = .1), 
     system.engines['Graphics']))
 
+#and a convenience function that takes the above and condenses creation to 1 line
+def vpythonGravityConvenience(system,name,pos,mom,mass,color):
+    system.bodies[name] = PhysicsBody.PhysicsBody(name,pos,mom,mass)
+    system.bodies[name].addComponent(system.engines['Gravity'])
+    system.bodies[name].addComponent(Component.makeComponent(
+        vpython.sphere(color=color, radius = .1), 
+        system.engines['Graphics']))
+
+#bodies get rapidly ejected with these on which is less interesting to watch imo
+#vpythonGravityConvenience(system, 'green', (0.0,1.0,-1.0), (-1.0,0.0,0.0), 1.0, vpython.color.green)
+#vpythonGravityConvenience(system, 'yelllow', (0.0,-1.0,1.0), (1.0,0.0,0.0), 1.0, vpython.color.yellow)
+
 #initializes the graphics
 system.engines['Graphics'].advance(0.0)
 
@@ -88,7 +100,7 @@ system.timeInit()
 
 #and a minute long simulation loop with a framerate limiter
 while system.totalTime<60.0:
-    print(system.currentElapsedTime())
+    #print(system.currentElapsedTime())
     if system.currentElapsedTime()<.02:
         time.sleep(.02-system.currentElapsedTime())
     system.advance()

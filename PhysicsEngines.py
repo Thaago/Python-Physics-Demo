@@ -10,7 +10,7 @@ Has various physics engines - gravity for example.
 import numpy
 from Physics import gravitationalForce as gf
 
-DEBUG = True
+DEBUG = False
 
 class GravityEngineEulerIntegrationElementwise():
     """A physics engine that computes the force of gravity on its bodies and
