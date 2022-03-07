@@ -37,9 +37,9 @@ and they component.
 """
 
 import PhysicsBody
-import PhysicsEngines
-import VPythonGraphicsEngine
-import Component
+from Engines import PhysicsEngines
+from Engines import VPythonGraphicsEngine
+from Components import Component
 import Simulation
 
 #import numpy

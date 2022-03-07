@@ -7,8 +7,6 @@ Created on Wed Mar  2 11:45:17 2022
 Manages graphics using vPython. A physics body could have multiple visuals, each
 using a different engine.
 
-The engine stores the actual visual object! This is against the usual component
-based model! Resolve. 
 """
 
 import vpython
